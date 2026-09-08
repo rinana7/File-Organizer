@@ -4,13 +4,13 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>Resources/app_icon.icns</key>
-		<data>
-		byW5ajV4DDCXKQNQ24GzItQ4odg=
-		</data>
 		<key>Resources/base_library.zip</key>
 		<data>
-		l9TYXkBF0VdANWqKV9YeN+B9Jqg=
+		Pm5264JbhxdqwNXI8n4AHTy9B1E=
+		</data>
+		<key>Resources/icon-windowed.icns</key>
+		<data>
+		eEHOuYpZLB0vKGVIWGZOh5rH8+o=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -376,18 +376,18 @@
 			<key>requirement</key>
 			<string>cdhash H"d6318ab83d6e2f533d9f658a6332444525070a93"</string>
 		</dict>
-		<key>Resources/app_icon.icns</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			GrWrcB6/rmbTTyiOMrC477yX0WI3sJyn6Sm09FHmtJ0=
-			</data>
-		</dict>
 		<key>Resources/base_library.zip</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Ha9GCoi6mWQlVSWM2qRCrkC57UAj7MHf/+hDIXHjlkY=
+			KkH14aKhnw3ICQ5Bch/FZcLOhTvKrfPif7mfeo1ydQU=
+			</data>
+		</dict>
+		<key>Resources/icon-windowed.icns</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			uQo7VuWRab4Phv4EEGmfQsyqFqDIXZgO8OtgaAMvCzY=
 			</data>
 		</dict>
 		<key>Resources/libcrypto.3.dylib</key>
