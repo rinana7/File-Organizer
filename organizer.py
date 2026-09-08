@@ -1,6 +1,7 @@
 import time
 from pathlib import Path
 import shutil
+from datetime import datetime
 
 
 TARGET_FOLDER = Path.home()/"Downloads"
@@ -16,6 +17,10 @@ CATEGORIES = {
 }
 
 def organize_directory():
+    mod_time = datetime.fromtimestamp(item.stat().st_mtime)
+    year_str = mod_time.strftime("%Y")
+    month_str = mod_time.strftime("%m")
+
     if not TARGET_FOLDER.exists():
         return
     for item in TARGET_FOLDER.iterdir():
@@ -26,8 +31,8 @@ def organize_directory():
 
         for category, extensions in CATEGORIES.items():
             if file_ext in extensions:
-                category_folder = TARGET_FOLDER/category
-                category_folder.mkdir(exist_ok=True)
+                category_folder = TARGET_FOLDER/category/year_str/month_str
+                category_folder.mkdir(parents=True, exist_ok=True)
 
                 shutil.move(str(item), str(category_folder / item.name))
                 moved = True
