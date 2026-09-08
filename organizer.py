@@ -40,7 +40,10 @@ def organize_directory():
 
 
 if __name__ == "__main__":
-    print("Organizer service running... Checking every hour")
-    while True:
-        organize_directory()
-        time.sleep(3600)
+    print("Organizer service running... Press Ctrl+C to stop")
+    try:
+        while True:
+            organize_directory()
+            time.sleep(3600)
+    except KeyboardInterrupt:
+        print("\nOrganizer stopped")
