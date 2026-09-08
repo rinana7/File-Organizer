@@ -1,5 +1,5 @@
 ('/Users/sakairinana/File-Organizer/dist/organizer',
- True,
+ False,
  False,
  False,
  None,
@@ -159,8 +159,8 @@
  [],
  False,
  False,
- 1788841028,
- [('run',
-   '/Users/sakairinana/.anyenv/envs/pyenv/versions/3.14.0/lib/python3.14/site-packages/PyInstaller/bootloader/Darwin-64bit/run',
+ 1788841666,
+ [('runw',
+   '/Users/sakairinana/.anyenv/envs/pyenv/versions/3.14.0/lib/python3.14/site-packages/PyInstaller/bootloader/Darwin-64bit/runw',
    'EXECUTABLE')],
  '/Users/sakairinana/.anyenv/envs/pyenv/versions/3.14.0/lib/libpython3.14.dylib')

@@ -1,0 +1,3 @@
+([('organizer',
+   '/Users/sakairinana/File-Organizer/dist/organizer',
+   'EXECUTABLE')],)
