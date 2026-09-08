@@ -10,8 +10,6 @@ An automated, background file management utility built in Python for macOS. It p
 - **Category & Extension Mapping:** Automatically routes files into dedicated folders (`Images`, `Documents`, `Audio`, `Videos`, `Archives`, `Executables`, and `Others`).
 - **Date-Based Organization:** Structures destination folders by modification year and month (`Category/YYYY/MM/`).
 - **Large File Filtering:** Isolates files exceeding 500 MB into a dedicated `Large_Files` directory.
-- **Undo Capability:** Tracks move operations in `history.json` to allow reversing the organized files back to their original locations.
-
 ---
 
 ## Project Structure
