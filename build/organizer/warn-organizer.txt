@@ -15,12 +15,12 @@ IMPORTANT: Do NOT post this list to the issue-tracker. Use it as a basis for
             tracking down the missing module yourself. Thanks!
 
 missing module named nt - imported by _colorize (delayed, conditional, optional), shutil (conditional), importlib._bootstrap_external (conditional), ntpath (optional), os (delayed, conditional, optional)
-missing module named 'collections.abc' - imported by tracemalloc (top-level), typing (top-level), traceback (top-level), _colorize (top-level), logging (top-level), selectors (top-level), http.client (top-level), importlib.resources.readers (top-level), inspect (top-level)
+missing module named 'collections.abc' - imported by tracemalloc (top-level), typing (top-level), traceback (top-level), _colorize (top-level), logging (top-level), selectors (top-level), http.client (top-level), importlib.resources.readers (top-level), inspect (top-level), schedule (top-level)
 missing module named _frozen_importlib_external - imported by importlib._bootstrap (delayed), importlib (optional), importlib.abc (optional)
 excluded module named _frozen_importlib - imported by importlib (optional), importlib.abc (optional)
 missing module named winreg - imported by importlib._bootstrap_external (conditional), mimetypes (optional), urllib.request (delayed, conditional, optional)
 missing module named _zstd - imported by compression.zstd (top-level), compression.zstd._zstdfile (top-level)
 missing module named _lzma - imported by lzma (top-level)
+missing module named pytz - imported by schedule (delayed, conditional)
 missing module named _winapi - imported by shutil (conditional), ntpath (optional), pathlib._os (optional), mimetypes (optional), subprocess (conditional)
-missing module named schedule - imported by /Users/sakairinana/File-Organizer/organizer.py (top-level)
 missing module named msvcrt - imported by subprocess (optional)

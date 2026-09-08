@@ -1,8 +1,7 @@
-import os
-import shutil
-from pathlib import Path
 import time
-import schedule
+from pathlib import Path
+import shutil
+
 
 TARGET_FOLDER = Path.home()/"Downloads"
 
@@ -39,10 +38,9 @@ def organize_directory():
             others_folder.mkdir(exist_ok=True)
             shutil.move(str(item), str(others_folder/item.name))
 
-schedule.every().day.at("20:00").do(organize_directory)
 
 if __name__ == "__main__":
-    print("Organizer service running... Press Ctrl+C to stop")
+    print("Organizer service running... Checking every hour")
     while True:
-        schedule.run_pending()
-        time.sleep(60)
+        organize_directory()
+        time.sleep(3600)
