@@ -29,7 +29,7 @@ def organize_directory():
 
         if file_size > LARGE_FILE_THRESHOLD:
             large_folder = TARGET_FOLDER / "Large Files"
-            large_folder.mkdir(exist_ok=True)
+            large_folder.mkdir(parents=True, exist_ok=True)
             shutil.move(str(item), str(large_folder/item.name))
             print(f"Moved Large File: {item.name} -> Large_Files/")
             continue
@@ -51,7 +51,7 @@ def organize_directory():
 
         if not moved and file_ext != "":
             others_folder = TARGET_FOLDER/ "Others"/ year_str / month_str
-            others_folder.mkdir(exist_ok=True)
+            others_folder.mkdir(parents=True, exist_ok=True)
             shutil.move(str(item), str(others_folder / item.name))
             print(f"Moved: {item.name} -> Others/{year_str}/{month_str}/")
 
