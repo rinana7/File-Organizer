@@ -3,12 +3,13 @@ import shutil
 from pathlib import Path
 
 CATEGORIES = {
-    "Images":[".jpg", ".jpeg", ".png", ".gif", ".svg"],
+    "Images":[".jpg", ".jpeg", ".png", ".gif", ".svg", ".webp"],
     "Documents": [".pdf", ".docx", ".txt", ".xlsx", ".csv"],
     "Audio": [".mp3", ".wav", ".flac"],
     "Videos": [".mp4", ".mkv", ".mov"],
     "Archives": [".zip", ".tar", ".gz", ".7z"],
-    "Executables": [".exe", ".dmg", ".pkg", ".sh"]
+    "Executables": [".exe", ".dmg", ".pkg", ".sh"],
+    "Code Files": [".html", ".py"]
 }
 
 def organize_directory(directory_path):
