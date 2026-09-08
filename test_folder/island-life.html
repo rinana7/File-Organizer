@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drama Island 🌴</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap');
+:root{--bg:#0c0b14;--surface:#161422;--surface2:#1f1c30;--surface3:#28243d;--accent:#ff6b9d;--accent2:#c77dff;--gold:#ffd166;--teal:#06d6a0;--red:#ef476f;--blue:#4cc9f0;--orange:#ff9f1c;--text:#f0eeff;--muted:#8a87a0;--border:rgba(255,255,255,0.07);--gp:rgba(255,107,157,0.15);--gv:rgba(199,125,255,0.15);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);height:100vh;overflow:hidden;display:grid;grid-template-columns:300px 1fr 310px;grid-template-rows:52px 1fr 210px;}
+#topbar{grid-column:1/-1;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:12px;}
+#topbar h1{font-family:'Fredoka One',cursive;font-size:22px;background:linear-gradient(120deg,var(--accent),var(--accent2),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:1px;flex-shrink:0;}
+.tdiv{width:1px;height:24px;background:var(--border);}
+.tstat{display:flex;flex-direction:column;align-items:center;}
+.tstat .tv{font-size:15px;font-weight:800;color:var(--gold);}
+.tstat .tl{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
+#topbar .sp{flex:1;}
+.tb-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'Nunito',sans-serif;font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.tb-btn:hover{background:var(--accent);border-color:var(--accent);color:#fff;}
+.tb-btn.danger:hover{background:var(--red);border-color:var(--red);}
+#spd-badge{background:var(--surface3);border:1px solid var(--border);border-radius:20px;padding:4px 10px;font-size:11px;font-weight:800;color:var(--gold);}
+.panel{background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;}
+.panelr{border-right:none;border-left:1px solid var(--border);}
+.ph{padding:9px 14px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.phc{margin-left:auto;font-size:11px;color:var(--muted);font-weight:700;}
+#cscroll{flex:1;overflow-y:auto;padding:10px;}
+#cscroll::-webkit-scrollbar{width:3px;}
+#cscroll::-webkit-scrollbar-thumb{background:var(--surface3);}
+.slbl{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin:10px 0 5px;}
+#epicker{display:flex;gap:8px;align-items:flex-start;margin-bottom:6px;}
+#fprev{width:70px;height:70px;flex-shrink:0;background:var(--surface2);border:2px dashed rgba(255,255,255,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:38px;cursor:pointer;transition:border-color .2s;position:relative;}
+#fprev:hover{border-color:var(--accent);}
+#fprev .fhint{position:absolute;bottom:2px;right:2px;font-size:10px;background:var(--accent);border-radius:50%;width:16px;height:16px;display:flex;align-items:center;justify-content:center;color:#fff;font-style:normal;}
+#egwrap{flex:1;}
+.etabs{display:flex;gap:3px;margin-bottom:4px;}
+.etab{background:var(--surface3);border:1px solid var(--border);border-radius:6px;padding:2px 7px;font-size:10px;cursor:pointer;color:var(--muted);transition:all .12s;}
+.etab.active{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700;}
+.egrid{display:flex;flex-wrap:wrap;gap:3px;max-height:72px;overflow-y:auto;}
+.egrid::-webkit-scrollbar{width:2px;}
+.eopt{font-size:18px;cursor:pointer;padding:2px 3px;border-radius:5px;border:1px solid transparent;transition:all .1s;line-height:1;}
+.eopt:hover{background:var(--surface3);border-color:var(--border);transform:scale(1.2);}
+.eopt.sel{background:var(--gp);border-color:var(--accent);}
+.frow{display:grid;gap:6px;margin-bottom:6px;}
+.frow.c2{grid-template-columns:1fr 1fr;}
+.flbl{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);display:block;margin-bottom:2px;}
+input.fi,select.fi{background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'Nunito',sans-serif;font-size:12px;padding:6px 9px;border-radius:8px;width:100%;transition:border-color .15s;}
+input.fi:focus,select.fi:focus{outline:none;border-color:var(--accent);}
+input.fi::placeholder{color:var(--muted);}
+select.fi option{background:var(--surface2);}
+#pchips{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px;}
+.pchip{padding:4px 9px;border-radius:20px;font-size:10px;font-weight:700;cursor:pointer;background:var(--surface3);border:1px solid var(--border);color:var(--muted);transition:all .12s;}
+.pchip:hover{border-color:var(--accent2);color:var(--accent2);}
+.pchip.active{background:var(--gv);border-color:var(--accent2);color:var(--accent2);}
+#add-btn{width:100%;background:linear-gradient(120deg,var(--accent),var(--accent2));border:none;color:#fff;font-family:'Fredoka One',cursive;font-size:15px;padding:9px;border-radius:10px;cursor:pointer;letter-spacing:.5px;transition:opacity .15s;margin-top:4px;}
+#add-btn:hover{opacity:.85;}
+#roster{max-height:180px;overflow-y:auto;padding:5px;}
+#roster::-webkit-scrollbar{width:3px;}
+.ri{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:10px;cursor:pointer;transition:background .1s;border:1px solid transparent;}
+.ri:hover{background:var(--surface2);border-color:var(--border);}
+.rif{font-size:24px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:var(--surface2);border-radius:50%;flex-shrink:0;}
+.rii{flex:1;min-width:0;}
+.rin{font-size:12px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ris{font-size:10px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ptag{display:inline-block;font-size:9px;padding:1px 5px;border-radius:10px;background:var(--surface3);color:var(--muted);margin-right:2px;margin-bottom:2px;}
+.rdel{font-size:13px;opacity:0;cursor:pointer;color:var(--red);transition:opacity .1s;padding:2px 4px;}
+.ri:hover .rdel{opacity:.6;}
+.rdel:hover{opacity:1!important;}
+#island-container{position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 55%,#182e21 0%,#0d1a12 55%,var(--bg) 100%);grid-row:2;grid-column:2;}
+#ibg{position:absolute;inset:0;pointer-events:none;}
+.ishape{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:600px;height:390px;background:radial-gradient(ellipse,#2d5a3d 0%,#1e3d2a 55%,#153020 100%);border-radius:55% 45% 50% 50% / 52% 55% 45% 48%;box-shadow:0 0 80px rgba(6,214,160,.06),inset 0 0 50px rgba(0,0,0,.35);}
+.wring{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:660px;height:445px;border-radius:55% 45% 50% 50% / 52% 55% 45% 48%;border:14px solid rgba(76,201,240,.2);box-shadow:0 0 40px rgba(76,201,240,.07);}
+.palm{position:absolute;font-size:28px;pointer-events:none;opacity:.7;}
+#clayer{position:absolute;inset:0;}
+.csprite{position:absolute;width:60px;cursor:grab;user-select:none;z-index:10;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;}
+.csprite:active{cursor:grabbing;z-index:100;}
+.cavatar{width:48px;height:48px;background:var(--surface);border:2px solid rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;position:relative;transition:border-color .3s,box-shadow .3s;box-shadow:0 3px 10px rgba(0,0,0,.5);}
+.cntag{font-size:10px;font-weight:800;margin-top:3px;background:rgba(0,0,0,.75);padding:2px 7px;border-radius:20px;white-space:nowrap;cursor:pointer;border:1px solid rgba(255,255,255,.1);transition:background .15s;max-width:80px;overflow:hidden;text-overflow:ellipsis;}
+.cntag:hover{background:rgba(255,107,157,.5);}
+.sbub{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#fff;color:#111;font-size:10px;font-weight:700;padding:5px 9px;border-radius:12px;pointer-events:none;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,.35);max-width:150px;text-align:center;animation:bpop .2s ease;}
+.sbub::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#fff;}
+@keyframes bpop{from{transform:translateX(-50%) scale(.4);opacity:0}to{transform:translateX(-50%) scale(1);opacity:1}}
+.rbadge{position:absolute;bottom:-3px;right:-3px;font-size:11px;width:18px;height:18px;background:var(--bg);border-radius:50%;display:flex;align-items:center;justify-content:center;}
+@keyframes floatUp{0%{opacity:1;transform:translateX(-50%) translateY(0)}100%{opacity:0;transform:translateX(-50%) translateY(-70px)}}
+.fpart{position:absolute;font-size:18px;pointer-events:none;left:50%;top:-10px;animation:floatUp 2.5s ease forwards;}
+#ipopu{position:absolute;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:12px 14px;width:230px;z-index:300;display:none;box-shadow:0 8px 32px rgba(0,0,0,.6);pointer-events:none;}
+#ipopu.show{display:block;animation:ipop .25s ease;}
+@keyframes ipop{from{opacity:0;transform:scale(.85) translateY(8px)}to{opacity:1;transform:scale(1)}}
+#ip-heads{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:6px;}
+.ipface{font-size:28px;}
+#ip-evt{font-size:11px;font-weight:800;text-align:center;margin-bottom:4px;text-transform:uppercase;letter-spacing:.8px;}
+#ip-dlg{font-size:11px;color:var(--muted);text-align:center;font-style:italic;line-height:1.4;min-height:28px;}
+#ip-bars{display:flex;gap:8px;margin-top:8px;justify-content:center;}
+.ipbar-wrap{display:flex;flex-direction:column;align-items:center;font-size:9px;color:var(--muted);gap:2px;}
+.ipbar-wrap .ipbv{font-size:12px;font-weight:800;color:var(--text);}
+.ipbar{width:64px;height:4px;background:var(--surface3);border-radius:2px;overflow:hidden;}
+.ipbf{height:100%;border-radius:2px;transition:width .4s;}
+#dfeed{flex:1;overflow-y:auto;padding:5px;display:flex;flex-direction:column;gap:3px;}
+#dfeed::-webkit-scrollbar{width:3px;}
+.fi{font-size:11px;padding:6px 9px;border-radius:8px;border-left:3px solid;background:var(--surface2);line-height:1.45;animation:fdin .3s ease;}
+@keyframes fdin{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:translateX(0)}}
+.fi .ft{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:4px;}
+.fi .ft .ftime{margin-left:auto;color:var(--muted);font-weight:400;}
+.fi .fm{color:var(--muted);margin-top:2px;}
+.f-love{border-color:var(--accent)}.f-love .ft{color:var(--accent)}
+.f-married{border-color:var(--gold)}.f-married .ft{color:var(--gold)}
+.f-cheat{border-color:var(--accent2)}.f-cheat .ft{color:var(--accent2)}
+.f-enemy{border-color:var(--red)}.f-enemy .ft{color:var(--red)}
+.f-meet{border-color:var(--teal)}.f-meet .ft{color:var(--teal)}
+.f-baby{border-color:var(--orange)}.f-baby .ft{color:var(--orange)}
+.f-drama{border-color:var(--red)}.f-drama .ft{color:var(--red)}
+.f-breakup{border-color:var(--red)}.f-breakup .ft{color:var(--red)}
+.f-fight{border-color:var(--orange)}.f-fight .ft{color:var(--orange)}
+.f-rumor{border-color:var(--accent2)}.f-rumor .ft{color:var(--accent2)}
+#smp{grid-column:1/-1;grid-row:3;background:var(--surface);border-top:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;}
+#mwrap{flex:1;position:relative;overflow:hidden;cursor:grab;}
+#mwrap:active{cursor:grabbing;}
+#svgmap{width:100%;height:100%;}
+.mleg{position:absolute;right:10px;top:6px;display:flex;gap:8px;flex-wrap:wrap;}
+.lgi{display:flex;align-items:center;gap:4px;font-size:9px;color:var(--muted);}
+.lgln{width:16px;height:3px;border-radius:2px;}
+#modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;align-items:center;justify-content:center;}
+#modal-overlay.show{display:flex;}
+#mbox{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:24px;max-width:380px;width:90%;}
+#mbox .mh{font-family:'Fredoka One',cursive;font-size:20px;color:var(--accent);margin-bottom:8px;}
+#mbox .mb{font-size:13px;color:var(--muted);margin-bottom:18px;line-height:1.6;}
+.mact{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;}
+.mact button{padding:7px 16px;border-radius:20px;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;cursor:pointer;transition:all .15s;}
+.mbsec{background:var(--surface2);border:1px solid var(--border);color:var(--text);}
+.mbpri{background:var(--accent);border:1px solid var(--accent);color:#fff;}.mbpri:hover{opacity:.85;}
+.mbalt{background:var(--gold);border:1px solid var(--gold);color:#111;}.mbalt:hover{opacity:.85;}
+#tooltip{position:fixed;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:7px 11px;font-size:11px;pointer-events:none;z-index:600;display:none;box-shadow:0 4px 16px rgba(0,0,0,.5);}
+#empty-isl{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;opacity:.4;}
+#empty-isl .be{font-size:48px;margin-bottom:8px;}
+#empty-isl p{font-size:13px;color:var(--muted);text-align:center;}
+::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-thumb{background:var(--surface3);}
+</style>
+</head>
+<body>
+ 
+<div id="topbar">
+  <h1>🌴 Drama Island</h1>
+  <div class="tdiv"></div>
+  <div class="tstat"><span class="tv" id="st-res">0</span><span class="tl">Residents</span></div>
+  <div class="tstat"><span class="tv" id="st-cpl">0</span><span class="tl">Couples</span></div>
+  <div class="tstat"><span class="tv" id="st-drm">0</span><span class="tl">Drama Events</span></div>
+  <div class="sp"></div>
+  <span id="spd-badge">⏱ 1×</span>
+  <button class="tb-btn" onclick="setSpeed(1)">1×</button>
+  <button class="tb-btn" onclick="setSpeed(2)">2×</button>
+  <button class="tb-btn" onclick="setSpeed(4)">4×</button>
+  <button class="tb-btn" id="pause-btn" onclick="togglePause()">⏸ Pause</button>
+  <button class="tb-btn danger" onclick="clearAll()">🗑 Reset</button>
+</div>
+ 
+<div class="panel">
+  <div class="ph">🎨 Character Creator</div>
+  <div id="cscroll">
+    <div class="slbl">Choose a face</div>
+    <div id="epicker">
+      <div id="fprev" title="Selected face"><span id="fp-em">😊</span><i class="fhint">★</i></div>
+      <div id="egwrap">
+        <div class="etabs">
+          <span class="etab active" onclick="switchTab('people',this)">😀</span>
+          <span class="etab" onclick="switchTab('cool',this)">😎</span>
+          <span class="etab" onclick="switchTab('fun',this)">🤪</span>
+          <span class="etab" onclick="switchTab('animals',this)">🐱</span>
+          <span class="etab" onclick="switchTab('fantasy',this)">🧙</span>
+        </div>
+        <div class="egrid" id="egrid"></div>
+      </div>
+    </div>
+    <div class="slbl">Details</div>
+    <div class="frow"><label class="flbl">Name</label><input class="fi" id="cn" placeholder="e.g. Alex" maxlength="14"></div>
+    <div class="frow c2">
+      <div><label class="flbl">Age</label><input class="fi" id="ca" type="number" min="18" max="80" value="24"></div>
+      <div><label class="flbl">Gender</label>
+        <select class="fi" id="cg">
+          <option value="M">♂ Man</option><option value="F">♀ Woman</option><option value="NB">⚧ Nonbinary</option>
+        </select>
+      </div>
+    </div>
+    <div class="frow"><label class="flbl">Attracted to</label>
+      <select class="fi" id="cp">
+        <option value="M">Men</option><option value="F">Women</option><option value="E" selected>Everyone</option>
+      </select>
+    </div>
+    <div class="slbl">Personality <span style="color:var(--accent2)">(pick 1–2)</span></div>
+    <div id="pchips"></div>
+    <button id="add-btn" onclick="addChar()">＋ Add to Island</button>
+    <div style="height:8px"></div>
+  </div>
+  <div class="ph" style="margin-top:auto">👥 Residents <span class="phc" id="rcnt">0</span></div>
+  <div id="roster"></div>
+</div>
+ 
+<div id="island-container">
+  <div id="ibg"><div class="wring"></div><div class="ishape"></div></div>
+  <div id="empty-isl"><div class="be">🌴</div><p>Create your first character<br>to begin the drama!</p></div>
+  <div id="clayer"></div>
+  <div id="ipopu">
+    <div id="ip-heads"><span class="ipface" id="ip-fa"></span><span style="font-size:14px;color:var(--muted)" id="ip-arr">💬</span><span class="ipface" id="ip-fb"></span></div>
+    <div id="ip-evt" style="color:var(--teal)">Chatting</div>
+    <div id="ip-dlg">"..."</div>
+    <div id="ip-bars">
+      <div class="ipbar-wrap"><span class="ipbv" id="ipn-a">A</span><span>feelings</span><div class="ipbar"><div class="ipbf" id="ipb-a" style="background:var(--accent);width:0%"></div></div></div>
+      <div class="ipbar-wrap"><span class="ipbv" id="ipn-b">B</span><span>feelings</span><div class="ipbar"><div class="ipbf" id="ipb-b" style="background:var(--accent2);width:0%"></div></div></div>
+    </div>
+  </div>
+</div>
+ 
+<div class="panel panelr">
+  <div class="ph">📢 Drama Feed <span style="margin-left:auto;font-size:9px;color:var(--muted);cursor:pointer;font-weight:400" onclick="clrFeed()">clear ✕</span></div>
+  <div id="dfeed"><div style="padding:16px;text-align:center;color:var(--muted);font-size:12px">No drama yet... 😴<br><span style="font-size:10px">Create characters to start!</span></div></div>
+</div>
+ 
+<div id="smp">
+  <div class="ph">🗺 Social Map — drag to pan · scroll to zoom
+    <div class="mleg">
+      <div class="lgi"><div class="lgln" style="background:var(--teal)"></div>Interested</div>
+      <div class="lgi"><div class="lgln" style="background:var(--accent)"></div>Dating</div>
+      <div class="lgi"><div class="lgln" style="background:var(--gold);height:5px"></div>Married</div>
+      <div class="lgi"><div class="lgln" style="background:var(--accent2)"></div>Cheating</div>
+      <div class="lgi"><div class="lgln" style="background:var(--red)"></div>Enemies</div>
+    </div>
+  </div>
+  <div id="mwrap">
+    <svg id="svgmap" xmlns="http://www.w3.org/2000/svg">
+      <defs id="svgdefs"></defs>
+      <g id="svgvp"><g id="svglinks"></g><g id="svgnodes"></g></g>
+    </svg>
+  </div>
+</div>
+ 
+<div id="modal-overlay">
+  <div id="mbox">
+    <div class="mh" id="mtitle">Event!</div>
+    <div class="mb" id="mbody"></div>
+    <div class="mact" id="mactions"></div>
+  </div>
+</div>
+<div id="tooltip"></div>
+ 
+<script>
+const EMOJIS={
+  people:['😊','😄','🙂','😐','🤔','😏','😤','😢','😡','🥺','😍','🥰','😘','😜','😎','🤩','😇','🤗','😶','🫡'],
+  cool:  ['😎','🕶️','🤓','🧐','😏','😌','🤭','😤','🫤','🥱','😑','😒','🙄','🤫','🫢','😤','🫠','🥴','😬','🥸'],
+  fun:   ['🤪','😜','😝','🥳','🤡','👹','💀','☠️','👻','😈','🤑','😵','🫨','🤯','🤠','🧟','🫃','😬','🫣','🤬'],
+  animals:['🐱','🐶','🐺','🦊','🐸','🐼','🐨','🦁','🐯','🦄','🐔','🦋','🐙','🐻','🦝','🐭','🐹','🦦','🦚','🦜'],
+  fantasy:['🧙','🧛','🧟','🧜','🧝','🧞','🦸','🦹','🧚','🪄','👸','🤴','🧑‍🚀','🧑‍🎤','🧑‍🍳','🧑‍🎨','🧑‍🔬','🧑‍⚖️','🥷','🫅'],
+};
+const PERSO={
+  '🔥 Flirty':    {flirt:2,loyal:.5,drama:1.5,fight:.5},
+  '💎 Loyal':     {flirt:.5,loyal:2,drama:.5,fight:.5},
+  '🗣️ Gossip':   {flirt:1,loyal:.8,drama:2,fight:1},
+  '😈 Manipulative':{flirt:1.5,loyal:.3,drama:2,fight:1.5},
+  '🥊 Hot-headed':{flirt:.8,loyal:1,drama:1.5,fight:2},
+  '🤍 Romantic':  {flirt:1.5,loyal:1.5,drama:1,fight:.3},
+  '🧊 Cold':      {flirt:.3,loyal:.7,drama:.5,fight:1},
+  '🎭 Dramatic':  {flirt:1.2,loyal:.7,drama:3,fight:1.5},
+  '🌻 Friendly':  {flirt:1,loyal:1.2,drama:.8,fight:.3},
+  '😴 Boring':    {flirt:.3,loyal:1.5,drama:.2,fight:.2},
+};
+const DLG={
+  meet:   ["Hey there!","Nice island!","Who are you?","Cool vibe here~","First time here?"],
+  friend: ["You're actually fun!","I feel like I know you!","BFFs?","This is nice 😊","You get me."],
+  flirt:  ["Is it hot or is it just you? 😏","Wow, you're something else...","I keep thinking about you~","You make me nervous 🥺","Stop being so cute!"],
+  dating: ["I love you 💕","You're my person!","Kiss me!","I'm so happy with you 😍","Don't ever leave me~","You're everything."],
+  married:["My darling ❤️","Forever yours 💍","I'd choose you every time!","You complete me 🥹","Home is wherever you are."],
+  cheat:  ["Shhh, no one can know! 🤫","This stays between us~","You make me forget everything...","I shouldn't be here... but here I am 😏","Promise you won't tell?"],
+  enemy:  ["I HATE you!","Stay AWAY from me!","You're dead to me! 💀","How DARE you!","I curse the day I met you!","We are DONE."],
+  jealous:["Who were you talking to?! 😤","I SAW that look!","Are you cheating on me?!","I don't trust you anymore...","EXPLAIN yourself!"],
+  reject: ["Ew, not interested.","No thanks.","I have standards, sorry~","Not in a million years.","Hard pass."],
+  rumor:  ["Did you hear about them?! 👀","Oh HONEY let me tell you...","This stays between us 🤫","DRAMA. That's all I'll say.","You didn't hear it from me..."],
+  apology:["I messed up, I'm sorry 😭","Please forgive me...","I didn't mean it!","Can we start over?","I hate that I hurt you."],
+  propose:["Will you marry me? 💍","I want to spend my life with you!","You're the one, I just know it!","Marry me?","Say yes, please 🥺"],
+  baby:   ["We're having a baby! 👶","I'm pregnant! 🍼","Our family is growing!","A little us! 😭❤️","Can you believe it?!"],
+  fight:  ["This relationship is TOXIC!","We need to talk.","I can't do this anymore!","You ALWAYS do this!","I'm done pretending."],
+  gossip: ["Spilling the TEA ☕","You will NOT believe this.","I heard everything 👂","The receipts are in.","Drama alert! 🚨"],
+  crush:  ["Oh wow... 😍","*tries not to stare*","They're SO pretty...","My heart 💗","I can't stop thinking about them~"],
+};
+ 
+const S={
+  chars:{},rels:{},nextId:1,loop:null,speed:1,paused:false,tick:0,dramaCount:0,
+  face:'😊',selPerso:[],
+};
+const PROX=85, PWITNESS=130;
+ 
+function p(a){return a[Math.floor(Math.random()*a.length)];}
+function dst(a,b){return Math.sqrt((a.x-b.x)**2+(a.y-b.y)**2);}
+function rk(a,b){return[a,b].sort().join(':');}
+ 
+function grel(a,b){
+  const k=rk(a,b);
+  if(!S.rels[k])S.rels[k]={ids:[a,b],score:{[a]:0,[b]:0},level:'Stranger'};
+  return S.rels[k];
+}
+ 
+function pst(id){return S.chars[id]?.stats||{flirt:1,loyal:1,drama:1,fight:1};}
+ 
+function attracted(a,b){
+  const ca=S.chars[a],cb=S.chars[b];
+  if(!ca||!cb)return false;
+  const pr=ca.pref;
+  return pr==='E'||(pr==='M'&&cb.gender==='M')||(pr==='F'&&cb.gender==='F');
+}
+ 
+// ── EMOJI PICKER ──
+let curTab='people';
+function switchTab(tab,el){
+  curTab=tab;
+  document.querySelectorAll('.etab').forEach(e=>e.classList.remove('active'));
+  el.classList.add('active');
+  renderGrid();
+}
+function renderGrid(){
+  const g=document.getElementById('egrid');g.innerHTML='';
+  EMOJIS[curTab].forEach(em=>{
+    const s=document.createElement('span');
+    s.className='eopt'+(em===S.face?' sel':'');
+    s.textContent=em;s.onclick=()=>selFace(em);
+    g.appendChild(s);
+  });
+}
+function selFace(em){
+  S.face=em;document.getElementById('fp-em').textContent=em;
+  document.querySelectorAll('.eopt').forEach(e=>e.classList.toggle('sel',e.textContent===em));
+}
+ 
+// ── PERSONALITY ──
+function initChips(){
+  const c=document.getElementById('pchips');
+  c.innerHTML = '';
+  Object.keys(PERSO).forEach(n=>{
+    const ch=document.createElement('div');ch.className='pchip';ch.textContent=n;
+    ch.onclick=()=>{
+      if(ch.classList.contains('active')){ch.classList.remove('active');S.selPerso=S.selPerso.filter(x=>x!==n);}
+      else{if(S.selPerso.length>=2) {
+          const first = S.selPerso.shift();
+          document.querySelectorAll('.pchip').forEach(el => { if(el.textContent === first) el.classList.remove('active'); });
+      }
+      ch.classList.add('active');S.selPerso.push(n);}
+    };
+    c.appendChild(ch);
+  });
+}
+ 
+function calcStats(perso){
+  const base={flirt:1,loyal:1,drama:1,fight:1};
+  perso.forEach(n=>{const p=PERSO[n];if(!p)return;Object.keys(base).forEach(k=>base[k]*=p[k]);});
+  return base;
+}
+ 
+// ── ADD CHARACTER ──
+function addChar(){
+  const name=document.getElementById('cn').value.trim();
+  const age=parseInt(document.getElementById('ca').value)||24;
+  const gender=document.getElementById('cg').value;
+  const pref=document.getElementById('cp').value;
+  if(!name){flash('cn');return;}
+ 
+  const id='c'+S.nextId++;
+  const island=document.getElementById('island-container');
+  const iw=island.offsetWidth,ih=island.offsetHeight,m=75;
+  
+  // CRITICAL: Ensure personalities are cloned/captured correctly
+  const personalities = S.selPerso.length > 0 ? [...S.selPerso] : [p(Object.keys(PERSO))];
+ 
+  const char={
+    id,name,age,gender,pref,face:S.face,
+    personalities: personalities, 
+    stats:calcStats(personalities),
+    x:m+Math.random()*(iw-m*2),y:m+Math.random()*(ih-m*2),
+    vx:(Math.random()-.5)*.9,vy:(Math.random()-.5)*.9,
+    partner:null,spouse:null,cheating:false,
+    status:'Single',lastTick:0,
+  };
+ 
+  S.chars[id]=char;
+  spawnSprite(char);
+  updateRoster();updateSocialMap();updateStats();
+  addFeed('meet',`🌴 ${name} has arrived on Drama Island!`,`${name} · ${personalities.join(', ')}`);
+  showBubble(id,p(DLG.meet),3000);
+  document.getElementById('empty-isl').style.display='none';
+  document.getElementById('cn').value='';
+  S.selPerso=[];
+  document.querySelectorAll('.pchip.active').forEach(c=>c.classList.remove('active'));
+}
+ 
+function spawnSprite(char){
+  const layer=document.getElementById('clayer');
+  const div=document.createElement('div');
+  div.className='csprite';div.id='spr-'+char.id;
+  div.style.left=char.x+'px';div.style.top=char.y+'px';
+  div.innerHTML=`<div class="cavatar" id="av-${char.id}"><span style="font-size:26px">${char.face}</span><span class="rbadge" id="bdg-${char.id}"></span></div><div class="cntag" id="tag-${char.id}">${char.name}</div>`;
+  let drag=false,sx,sy,slx,sly;
+  div.addEventListener('mousedown',e=>{
+    if(e.target.classList.contains('cntag')||e.target.closest('.cntag')){handleTag(char.id);return;}
+    drag=true;sx=e.clientX;sy=e.clientY;slx=char.x;sly=char.y;div.style.zIndex=100;e.stopPropagation();
+  });
+  document.addEventListener('mousemove',e=>{if(!drag)return;char.x=slx+(e.clientX-sx);char.y=sly+(e.clientY-sy);div.style.left=char.x+'px';div.style.top=char.y+'px';});
+  document.addEventListener('mouseup',()=>{if(drag){drag=false;div.style.zIndex=10;}});
+  layer.appendChild(div);
+}
+ 
+function removeChar(id){
+  delete S.chars[id];
+  document.getElementById('spr-'+id)?.remove();
+  for(const k of Object.keys(S.rels))if(k.includes(id))delete S.rels[k];
+  updateRoster();updateSocialMap();updateStats();
+  if(!Object.keys(S.chars).length)document.getElementById('empty-isl').style.display='flex';
+}
+ 
+function updateRoster(){
+  const r=document.getElementById('roster');r.innerHTML='';
+  const chars=Object.values(S.chars);
+  document.getElementById('rcnt').textContent=chars.length;
+  chars.forEach(c=>{
+    const d=document.createElement('div');d.className='ri';
+    const sc=c.spouse?'#ffd166':c.partner?'#ff6b9d':c.cheating?'#c77dff':'var(--muted)';
+    const ptags = c.personalities.map(x=>`<span class="ptag">${x}</span>`).join('');
+    d.innerHTML=`<div class="rif">${c.face}</div><div class="rii"><div class="rin">${c.name}</div><div class="ris" style="color:${sc}">${c.status}</div><div style="margin-top:2px; display:flex; flex-wrap:wrap;">${ptags}</div></div><span class="rdel" onclick="removeChar('${c.id}')">✕</span>`;
+    d.addEventListener('click',e=>{if(!e.target.classList.contains('rdel'))hlChar(c.id);});
+    r.appendChild(d);
+  });
+}
+ 
+// ── GAME LOOP ──
+function startLoop(){
+  if(S.loop)clearInterval(S.loop);
+  S.loop=setInterval(tick,Math.max(40,180/S.speed));
+}
+ 
+function tick(){
+  if(S.paused)return;
+  S.tick++;
+  moveAll();
+  if(S.tick%3===0)chkProx();
+  if(S.tick%(Math.floor(55/S.speed))===0)rndDrama();
+  if(S.tick%8===0)updateSocialMap();
+}
+ 
+function moveAll(){
+  const isl=document.getElementById('island-container');
+  const iw=isl.offsetWidth,ih=isl.offsetHeight,m=55;
+  for(const c of Object.values(S.chars)){
+    c.vx+=(Math.random()-.5)*.25;c.vy+=(Math.random()-.5)*.25;
+    const mv=1.5;c.vx=Math.max(-mv,Math.min(mv,c.vx));c.vy=Math.max(-mv,Math.min(mv,c.vy));
+    c.x+=c.vx;c.y+=c.vy;
+    if(c.x<m){c.x=m;c.vx*=-1;}if(c.x>iw-m){c.x=iw-m;c.vx*=-1;}
+    if(c.y<m){c.y=m;c.vy*=-1;}if(c.y>ih-m){c.y=ih-m;c.vy*=-1;}
+    const s=document.getElementById('spr-'+c.id);
+    if(s){s.style.left=c.x+'px';s.style.top=c.y+'px';}
+  }
+}
+ 
+function chkProx(){
+  const chars=Object.values(S.chars);
+  for(let i=0;i<chars.length;i++)for(let j=i+1;j<chars.length;j++){
+    const a=chars[i],b=chars[j];
+    if(dst(a,b)<PROX&&S.tick-(a.lastTick||0)>18&&Math.random()<.35)runInteract(a.id,b.id,false);
+  }
+}
+ 
+function getNearby(id,r){
+  const c=S.chars[id];
+  return Object.values(S.chars).filter(x=>x.id!==id&&dst(c,x)<r).sort((a,b)=>dst(c,a)-dst(c,b));
+}
+ 
+// ── INTERACTION ──
+function handleTag(id){
+  const char=S.chars[id];if(!char)return;
+  const nearby=getNearby(id,PROX*1.9);
+  if(!nearby.length){showBubble(id,"No one close enough... 😤",2000);return;}
+  const tgt=nearby[0];
+  const rel=grel(id,tgt.id);
+ 
+  if(rel.level==='Married'){
+    showModal('💍 Married Actions',`What should ${char.name} do with ${tgt.name}?`,[
+      {l:'👶 Have a Baby',c:'mbpri',cb:()=>trigBaby(id,tgt.id)},
+      {l:'💔 Divorce',c:'mbsec',cb:()=>trigDivorce(id,tgt.id)},
+      {l:'😈 Cheat',c:'mbalt',cb:()=>forceCheat(id,tgt.id)},
+      {l:'Cancel',c:'mbsec',cb:null}]);
+  } else if(rel.level==='Dating'){
+    showModal('💕 Dating Actions',`${char.name} & ${tgt.name} are dating!`,[
+      {l:'💍 Propose!',c:'mbpri',cb:()=>trigPropose(id,tgt.id)},
+      {l:'😈 Cheat on them',c:'mbalt',cb:()=>forceCheat(id,tgt.id)},
+      {l:'💔 Break Up',c:'mbsec',cb:()=>trigBreak(id,tgt.id,'Breakup')},
+      {l:'Cancel',c:'mbsec',cb:null}]);
+  } else if(rel.level==='Enemies'){
+    showModal('⚔️ Enemy Actions',`${char.name} and ${tgt.name} are enemies!`,[
+      {l:'🤝 Force Truce',c:'mbpri',cb:()=>forceTruce(id,tgt.id)},
+      {l:'🥊 Public Brawl!',c:'mbalt',cb:()=>trigFight(id,tgt.id)},
+      {l:'Cancel',c:'mbsec',cb:null}]);
+  } else {
+    runInteract(id,tgt.id,true);
+  }
+}
+ 
+function runInteract(aid,bid,forced){
+  const a=S.chars[aid],b=S.chars[bid];if(!a||!b)return;
+  a.lastTick=S.tick;b.lastTick=S.tick;
+  const rel=grel(aid,bid);
+  const aAB=attracted(aid,bid),bAA=attracted(bid,aid);
+  const sa=pst(aid),sb=pst(bid);
+ 
+  if(rel.level==='Enemies'){
+    if(forced)trigFight(aid,bid);
+    else showBubble(aid,p(DLG.enemy),2000);
+    showPopup(aid,bid,'Enemies 💀',p(DLG.enemy),'#ef476f',rel);
+    return;
+  }
+ 
+  const bgain=forced?20:4+Math.random()*9;
+  const romantic=aAB||bAA;
+  if(romantic){
+    if(aAB)rel.score[aid]=Math.min(100,rel.score[aid]+bgain*sa.flirt);
+    if(bAA)rel.score[bid]=Math.min(100,rel.score[bid]+bgain*sb.flirt);
+  } else {
+    rel.score[aid]=Math.min(100,rel.score[aid]+bgain*.4);
+    rel.score[bid]=Math.min(100,rel.score[bid]+bgain*.4);
+  }
+ 
+  const prev=rel.level;
+  chkRelProg(rel,aid,bid);
+ 
+  // dialogue
+  let dlg='',tag='Chat',col=relCol(rel.level);
+  if(rel.level==='Enemies'){dlg=p(DLG.enemy);tag='Drama 💀';}
+  else if(rel.level==='Cheating'){dlg=p(DLG.cheat);tag='Cheating 🤫';}
+  else if(rel.level==='Married'){dlg=p(DLG.married);tag='Married 💍';}
+  else if(rel.level==='Dating'){dlg=p(DLG.dating);tag='Dating 💕';}
+  else if(rel.score[aid]>35||rel.score[bid]>35){dlg=p(DLG.flirt);tag='Flirting 😏';}
+  else if(rel.score[aid]>12){dlg=p(DLG.friend);tag='Bonding 🌻';}
+  else{dlg=p(DLG.meet);tag='Meeting 👋';}
+ 
+  showPopup(aid,bid,tag,dlg,col,rel);
+  if(forced||rel.level!==prev)showBubble(aid,dlg,3000);
+ 
+  if(romantic)chkCheat(aid,bid,rel);
+  if(rel.level!==prev)announceRel(aid,bid,rel.level);
+}
+ 
+function chkRelProg(rel,aid,bid){
+  if(['Married','Enemies'].includes(rel.level))return;
+  const avg=(rel.score[aid]+rel.score[bid])/2;
+  if(avg>=80&&rel.level==='Dating'&&Math.random()<.015)trigPropose(aid,bid);
+  else if(avg>=55&&rel.level!=='Dating'){
+    if(!S.chars[aid].partner&&!S.chars[bid].partner&&!S.chars[aid].spouse&&!S.chars[bid].spouse){
+      rel.level='Dating';
+      S.chars[aid].partner=bid;S.chars[bid].partner=aid;
+      S.chars[aid].status='Dating '+S.chars[bid].name;
+      S.chars[bid].status='Dating '+S.chars[aid].name;
+      updBadge(aid);updBadge(bid);
+    }
+  } else if(avg>=20&&rel.level==='Stranger')rel.level='Interested';
+}
+ 
+function chkCheat(aid,bid,rel){
+  const a=S.chars[aid],b=S.chars[bid];if(!a||!b)return;
+  const aC=(a.partner&&a.partner!==bid)||(a.spouse&&a.spouse!==bid);
+  const bC=(b.partner&&b.partner!==aid)||(b.spouse&&b.spouse!==aid);
+  if(!aC&&!bC)return;
+  const cheater=aC?a:b;
+  const vidId=aC?(a.partner||a.spouse):(b.partner||b.spouse);
+  const victim=S.chars[vidId];
+  rel.level='Cheating';cheater.cheating=true;updBadge(cheater.id);
+  addFeed('cheat',`😈 ${cheater.name} is CHEATING on ${victim?.name||'their partner'}!`,p(DLG.cheat));
+  showBubble(cheater.id,p(DLG.cheat),3500);spawnFP(cheater.id,'🤫');
+  S.dramaCount++;updateStats();
+  if(victim){
+    if(dst(cheater,victim)<PWITNESS){setTimeout(()=>witnessBreak(cheater.id,vidId,aC?bid:aid),1200);}
+    else if(Math.random()<.45*pst(vidId).drama){setTimeout(()=>gossipReach(cheater.id,vidId,aC?bid:aid),5000+Math.random()*9000);}
+  }
+}
+ 
+function witnessBreak(cheaterId,victimId,accompliceId){
+  const ch=S.chars[cheaterId],vi=S.chars[victimId];if(!ch||!vi)return;
+  const isM=ch.spouse===victimId;
+  ch.cheating=false;
+  if(isM){ch.spouse=null;vi.spouse=null;}else{ch.partner=null;vi.partner=null;}
+  ch.status='Single';vi.status='Single';
+  const rel=grel(cheaterId,victimId);rel.level='Enemies';rel.score[cheaterId]=0;rel.score[victimId]=5;
+  addFeed('drama',`💔 ${vi.name} CAUGHT ${ch.name} cheating! ${isM?'DIVORCE':'BREAKUP'}! 😱`,p(DLG.jealous));
+  showBubble(victimId,p(DLG.jealous),4000);showBubble(cheaterId,p(DLG.apology),3000);
+  spawnFP(victimId,'💔');spawnFP(cheaterId,'😱');
+  updBadge(cheaterId);updBadge(victimId);updateRoster();updateStats();updateSocialMap();
+  S.dramaCount++;updateStats();
+}
+ 
+function gossipReach(cheaterId,victimId){
+  const ch=S.chars[cheaterId],vi=S.chars[victimId];if(!ch||!vi)return;
+  const gpers=Object.values(S.chars).filter(c=>c.id!==cheaterId&&c.id!==victimId&&pst(c.id).drama>1.3);
+  const goss=gpers[0];
+  addFeed('rumor',`👀 ${goss?goss.name:'Someone'} spilled: "${ch.name} cheated on ${vi.name}!"`,p(DLG.gossip));
+  if(goss)showBubble(goss.id,p(DLG.gossip),3000);
+  setTimeout(()=>witnessBreak(cheaterId,victimId,null),1500);
+}
+ 
+function announceRel(aid,bid,level){
+  const a=S.chars[aid],b=S.chars[bid];if(!a||!b)return;
+  const map={Interested:[`💚 ${a.name} and ${b.name} are getting close!`,'A new connection~'],
+    Dating:[`💕 ${a.name} and ${b.name} are DATING!`,p(DLG.flirt)],
+    Enemies:[`💀 ${a.name} and ${b.name} are ENEMIES!`,p(DLG.enemy)]};
+  if(map[level]){
+    addFeed(level==='Enemies'?'enemy':level==='Dating'?'love':'meet',map[level][0],map[level][1]);
+    spawnFP(aid,level==='Dating'?'💕':level==='Enemies'?'💀':'✨');
+    S.dramaCount++;updateStats();
+  }
+}
+ 
+// ── DRAMA ACTIONS ──
+function trigPropose(aid,bid){
+  const a=S.chars[aid],b=S.chars[bid];if(!a||!b)return;
+  const rel=grel(aid,bid);rel.level='Married';rel.score[aid]=100;rel.score[bid]=100;
+  a.spouse=bid;b.spouse=aid;a.partner=null;b.partner=null;a.cheating=false;b.cheating=false;
+  a.status='Married to '+b.name;b.status='Married to '+a.name;
+  updBadge(aid);updBadge(bid);
+  addFeed('married',`💍 ${a.name} PROPOSED to ${b.name}! They said YES! 🎊`,p(DLG.propose));
+  showBubble(aid,p(DLG.propose),4000);showBubble(bid,"YES! A thousand times yes! 💍",4000);
+  spawnFP(aid,'💍');spawnFP(bid,'🎊');updateRoster();updateStats();S.dramaCount++;updateStats();updateSocialMap();
+}
+ 
+function trigBreak(aid,bid,reason){
+  const a=S.chars[aid],b=S.chars[bid];if(!a||!b)return;
+  a.partner=null;b.partner=null;a.spouse=null;b.spouse=null;a.cheating=false;b.cheating=false;
+  a.status='Single';b.status='Single';
+  const rel=grel(aid,bid);rel.level='Enemies';rel.score[aid]=5;rel.score[bid]=5;
+  addFeed('breakup',`💔 ${a.name} and ${b.name}: ${reason}!`,p(DLG.fight));
+  showBubble(aid,p(DLG.fight),3500);showBubble(bid,p(DLG.enemy),3500);
+  spawnFP(aid,'💔');spawnFP(bid,'😤');updBadge(aid);updBadge(bid);updateRoster();updateStats();updateSocialMap();S.dramaCount++;updateStats();
+}
+ 
+function trigDivorce(aid,bid){trigBreak(aid,bid,'DIVORCE');}
+ 
+function trigBaby(aid,bid){
+  const a=S.chars[aid],b=S.chars[bid];if(!a||!b)return;
+  const babyName=p(['Mia','Leo','Nova','Kai','Luna','Zara','Ace','Iris','Rex','Faye','Jade','Remi','Sky','Beau']);
+  addFeed('baby',`👶 ${a.name} & ${b.name} welcome baby ${babyName}! 🍼`,p(DLG.baby));
+  showBubble(aid,p(DLG.baby),5000);showBubble(bid,`Baby ${babyName}! 🥹`,4000);
+  spawnFP(aid,'👶');spawnFP(bid,'🍼');S.dramaCount++;updateStats();
+}
+ 
+function trigFight(aid,bid){
+  const a=S.chars[aid],b=S.chars[bid];if(!a||!b)return;
+  const rel=grel(aid,bid);
+  rel.score[aid]=Math.max(0,rel.score[aid]-20);rel.score[bid]=Math.max(0,rel.score[bid]-20);
+  addFeed('fight',`🥊 ${a.name} and ${b.name} are in a PUBLIC BRAWL!`,p(DLG.fight));
+  showBubble(aid,p(DLG.enemy),3000);showBubble(bid,p(DLG.fight),3000);
+  spawnFP(aid,'💥');spawnFP(bid,'💥');S.dramaCount++;updateStats();
+}
+ 
+function forceCheat(cheaterId,victimId){
+  const c=S.chars[cheaterId];if(!c)return;
+  const others=Object.values(S.chars).filter(x=>x.id!==cheaterId&&x.id!==victimId);
+  if(!others.length){showBubble(cheaterId,"No one else to cheat with! 😒",2000);return;}
+  const tgt=p(others);
+  const rel=grel(cheaterId,tgt.id);rel.level='Cheating';c.cheating=true;updBadge(cheaterId);
+  addFeed('cheat',`😈 ${c.name} deliberately cheated on ${S.chars[victimId]?.name||'?'}!`,p(DLG.cheat));
+  showBubble(cheaterId,p(DLG.cheat),3500);spawnFP(cheaterId,'🤫');S.dramaCount++;updateStats();
+  const v=S.chars[victimId];
+  if(v&&dst(c,v)<PWITNESS*1.5)setTimeout(()=>witnessBreak(cheaterId,victimId,tgt.id),1500);
+}
+ 
+function forceTruce(aid,bid){
+  const a=S.chars[aid],b=S.chars[bid];if(!a||!b)return;
+  const rel=grel(aid,bid);rel.level='Interested';rel.score[aid]=25;rel.score[bid]=25;
+  addFeed('meet',`🤝 ${a.name} and ${b.name} called a TRUCE!`,"Peace at last... for now.");
+  showBubble(aid,"Fine. Truce. 🤝",2500);showBubble(bid,"...Don't push it. 😒",2500);
+  updateSocialMap();
+}
+ 
+// ── RANDOM DRAMA ENGINE ──
+function rndDrama(){
+  const chars=Object.values(S.chars);if(chars.length<2)return;
+  const roll=Math.random();
+ 
+  if(roll<.12){
+    // Rumor mill
+    const gossiper=chars.find(c=>pst(c.id).drama>1.5)||p(chars);
+    const about=p(chars.filter(c=>c.id!==gossiper.id));if(!about)return;
+    const nearby=getNearby(gossiper.id,130);
+    if(nearby.length){
+      addFeed('rumor',`🗣️ ${gossiper.name} is spreading rumors about ${about.name}!`,p(DLG.rumor));
+      showBubble(gossiper.id,p(DLG.rumor),3000);
+      const rel=grel(gossiper.id,about.id);
+      rel.score[gossiper.id]=Math.min(100,rel.score[gossiper.id]+5);
+      rel.score[about.id]=Math.max(0,rel.score[about.id]-12);
+      spawnFP(gossiper.id,'👀');S.dramaCount++;updateStats();
+    }
+  } else if(roll<.22){
+    // Secret crush
+    const admirer=p(chars);
+    const tgts=chars.filter(c=>c.id!==admirer.id&&attracted(admirer.id,c.id));
+    if(!tgts.length)return;
+    const beloved=p(tgts);
+    const rel=grel(admirer.id,beloved.id);
+    rel.score[admirer.id]=Math.min(100,rel.score[admirer.id]+18);
+    addFeed('love',`💘 ${admirer.name} has developed a secret crush on ${beloved.name}!`,p(DLG.crush));
+    showBubble(admirer.id,p(DLG.crush),3000);spawnFP(admirer.id,'💗');
+  } else if(roll<.30){
+    // Jealousy event
+    const coupled=chars.filter(c=>c.partner||c.spouse);
+    if(!coupled.length)return;
+    const jealous=p(coupled);
+    const pid=jealous.spouse||jealous.partner;const partner=S.chars[pid];
+    if(!partner)return;
+    const rivals=getNearby(pid,140).filter(c=>c.id!==jealous.id);
+    if(rivals.length){
+      const rival=rivals[0];
+      addFeed('drama',`😤 ${jealous.name} is JEALOUS of ${partner.name} with ${rival.name}!`,p(DLG.jealous));
+      showBubble(jealous.id,p(DLG.jealous),3500);spawnFP(jealous.id,'👀');S.dramaCount++;updateStats();
+      if(Math.random()<.3*pst(jealous.id).fight)setTimeout(()=>trigFight(jealous.id,pid),3000);
+    }
+  } else if(roll<.37){
+    // Apology attempt
+    const enemyRels=Object.values(S.rels).filter(r=>r.level==='Enemies');
+    if(!enemyRels.length)return;
+    const rel=p(enemyRels);const[aid,bid]=rel.ids;
+    const a=S.chars[aid],b=S.chars[bid];if(!a||!b)return;
+    if(dst(a,b)<160){
+      addFeed('meet',`😭 ${a.name} is trying to apologize to ${b.name}!`,p(DLG.apology));
+      showBubble(aid,p(DLG.apology),3500);
+      if(Math.random()<.45){
+        rel.level='Stranger';rel.score[aid]=12;rel.score[bid]=12;
+        addFeed('meet',`🌱 ${b.name} accepted ${a.name}'s apology! Enemies no more.`,"A fresh start...");
+        updateSocialMap();
+      } else {showBubble(bid,"TOO LATE! 💀",2500);spawnFP(bid,'💀');}
+    }
+  } else if(roll<.44&&chars.length>=3){
+    // Love triangle
+    const person=p(chars);
+    const suitors=chars.filter(c=>c.id!==person.id&&attracted(c.id,person.id));
+    if(suitors.length>=2){
+      const[sA,sB]=[suitors[0],suitors[1]];
+      addFeed('drama',`💘 LOVE TRIANGLE! ${sA.name} and ${sB.name} both want ${person.name}!`,"This won't end well...");
+      showBubble(sA.id,"Back off! They're MINE! 😤",3000);showBubble(sB.id,"No, MINE! 😤",3000);
+      spawnFP(person.id,'💞');S.dramaCount++;updateStats();
+      const rsv=grel(sA.id,sB.id);
+      rsv.score[sA.id]=Math.max(0,rsv.score[sA.id]-15);rsv.score[sB.id]=Math.max(0,rsv.score[sB.id]-15);
+    }
+  } else if(roll<.50){
+    // Unexpected confession
+    const c=p(chars);const tgts=chars.filter(x=>x.id!==c.id&&attracted(c.id,x.id));
+    if(!tgts.length)return;const t=p(tgts);
+    addFeed('love',`💌 ${c.name} confessed their feelings to ${t.name}!`,`"${p(DLG.flirt)}"`);
+    showBubble(c.id,p(DLG.flirt),3500);
+    const rel=grel(c.id,t.id);rel.score[c.id]=Math.min(100,rel.score[c.id]+25);
+    if(Math.random()<.4){
+      rel.score[t.id]=Math.min(100,rel.score[t.id]+15);
+      showBubble(t.id,"Oh... I feel the same! 😍",3000);spawnFP(t.id,'💕');
+    } else {showBubble(t.id,p(DLG.reject),2500);rel.score[t.id]=Math.max(0,rel.score[t.id]-5);}
+  } else if(roll<.56&&chars.length>=3){
+    // Alliance / friendship bonding
+    const trio=chars.slice(0,3);
+    addFeed('meet',`🤝 ${trio[0].name}, ${trio[1].name} & ${trio[2].name} are bonding!`,"Alliances forming~");
+    [grel(trio[0].id,trio[1].id),grel(trio[1].id,trio[2].id)].forEach(rel=>{
+      const[a,b]=rel.ids;rel.score[a]=Math.min(100,rel.score[a]+8);rel.score[b]=Math.min(100,rel.score[b]+8);
+    });
+    trio.forEach(c=>showBubble(c.id,p(DLG.friend),2500));
+  } else if(roll<.61){
+    // Mood outburst
+    const c=p(chars);
+    const moods=["I'm SO bored! 😩","This island is a MESS 🌋","I need drama in my life!","Who am I even?! 🤯","I can't take it anymore!","Someone NOTICE me! 😤"];
+    showBubble(c.id,p(moods),3000);
+    if(pst(c.id).drama>1.5){
+      const nearby=getNearby(c.id,120);
+      if(nearby.length)addFeed('drama',`🎭 ${c.name} is having a MELTDOWN!`,"All eyes on them~");
+    }
+  } else if(roll<.67){
+    // Proposal surprise
+    const coupled=chars.filter(c=>c.partner&&!c.spouse&&!c.cheating);
+    if(coupled.length){
+      const proposer=p(coupled);
+      if(S.chars[proposer.partner]&&Math.random()<.25){
+        setTimeout(()=>trigPropose(proposer.id,proposer.partner),500);
+      }
+    }
+  }
+}
+ 
+// ── POPUP ──
+function showPopup(aid,bid,tag,dlg,col,rel){
+  const a=S.chars[aid],b=S.chars[bid];if(!a||!b)return;
+  const pop=document.getElementById('ipopu');
+  document.getElementById('ip-fa').textContent=a.face;
+  document.getElementById('ip-fb').textContent=b.face;
+  document.getElementById('ip-evt').textContent=tag;
+  document.getElementById('ip-evt').style.color=col;
+  document.getElementById('ip-dlg').textContent=`"${dlg}"`;
+  document.getElementById('ipn-a').textContent=a.name;
+  document.getElementById('ipn-b').textContent=b.name;
+  document.getElementById('ipb-a').style.width=(rel.score[aid]||0)+'%';
+  document.getElementById('ipb-b').style.width=(rel.score[bid]||0)+'%';
+  const isl=document.getElementById('island-container');
+  const mx=(a.x+b.x)/2,my=(a.y+b.y)/2;
+  pop.style.left=Math.min(mx-115,isl.offsetWidth-245)+'px';
+  pop.style.top=Math.max(my-130,5)+'px';
+  pop.classList.add('show');
+  clearTimeout(pop._h);pop._h=setTimeout(()=>pop.classList.remove('show'),4500);
+}
+ 
+// ── HELPERS ──
+function showBubble(id,txt,dur){
+  const av=document.getElementById('av-'+id);if(!av)return;
+  av.querySelector('.sbub')?.remove();
+  const b=document.createElement('div');b.className='sbub';b.textContent=txt;
+  av.appendChild(b);setTimeout(()=>b.remove(),dur);
+}
+ 
+function updBadge(id){
+  const c=S.chars[id],bdg=document.getElementById('bdg-'+id),av=document.getElementById('av-'+id);
+  if(!c||!bdg||!av)return;
+  if(c.cheating){bdg.textContent='🤫';av.style.borderColor='#c77dff';av.style.boxShadow='0 0 12px rgba(199,125,255,.4)';}
+  else if(c.spouse){bdg.textContent='💍';av.style.borderColor='#ffd166';av.style.boxShadow='0 0 12px rgba(255,209,102,.3)';}
+  else if(c.partner){bdg.textContent='💕';av.style.borderColor='#ff6b9d';av.style.boxShadow='0 0 12px rgba(255,107,157,.3)';}
+  else{bdg.textContent='';av.style.borderColor='rgba(255,255,255,.1)';av.style.boxShadow='0 3px 10px rgba(0,0,0,.5)';}
+}
+ 
+function spawnFP(id,em){
+  const s=document.getElementById('spr-'+id);if(!s)return;
+  const fp=document.createElement('div');fp.className='fpart';fp.textContent=em;
+  s.appendChild(fp);setTimeout(()=>fp.remove(),2700);
+}
+ 
+function hlChar(id){
+  const s=document.getElementById('spr-'+id);if(!s)return;
+  s.style.filter='brightness(2) drop-shadow(0 0 10px var(--accent))';
+  setTimeout(()=>s.style.filter='',2000);
+}
+ 
+function addFeed(type,msg,sub){
+  const feed=document.getElementById('dfeed');
+  const ph=feed.querySelector('div:not(.fi)');if(ph)ph.remove();
+  const d=document.createElement('div');d.className=`fi f-${type}`;
+  const t=new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  d.innerHTML=`<div class="ft"><span>${type.toUpperCase()}</span><span class="ftime">${t}</span></div><div class="fm">${msg}${sub?`<br><span style="font-size:10px;font-style:italic">${sub}</span>`:''}</div>`;
+  feed.insertBefore(d,feed.firstChild);
+  while(feed.children.length>65)feed.removeChild(feed.lastChild);
+}
+ 
+function clrFeed(){document.getElementById('dfeed').innerHTML='<div style="padding:12px;text-align:center;color:var(--muted);font-size:11px">Feed cleared ✨</div>';}
+ 
+function relCol(l){return{Stranger:'#8a87a0',Interested:'#06d6a0',Dating:'#ff6b9d',Married:'#ffd166',Cheating:'#c77dff',Enemies:'#ef476f'}[l]||'#8a87a0';}
+ 
+function flash(id){const e=document.getElementById(id);e.style.borderColor='var(--red)';e.focus();setTimeout(()=>e.style.borderColor='',800);}
+ 
+function updateStats(){
+  const chars=Object.values(S.chars);
+  document.getElementById('st-res').textContent=chars.length;
+  document.getElementById('st-cpl').textContent=Math.floor(chars.filter(c=>c.partner||c.spouse).length/2);
+  document.getElementById('st-drm').textContent=S.dramaCount;
+}
+ 
+// ── SOCIAL MAP ──
+let mT={x:0,y:0,s:1},mDrag=false,mDS={x:0,y:0};
+function initMap(){
+  const w=document.getElementById('mwrap');
+  w.addEventListener('mousedown',e=>{mDrag=true;mDS={x:e.clientX-mT.x,y:e.clientY-mT.y};});
+  document.addEventListener('mousemove',e=>{if(!mDrag)return;mT.x=e.clientX-mDS.x;mT.y=e.clientY-mDS.y;applyMT();});
+  document.addEventListener('mouseup',()=>mDrag=false);
+  w.addEventListener('wheel',e=>{e.preventDefault();mT.s=Math.max(.25,Math.min(3,mT.s*(e.deltaY>0?.88:1.12)));applyMT();},{passive:false});
+}
+function applyMT(){document.getElementById('svgvp').setAttribute('transform',`translate(${mT.x},${mT.y}) scale(${mT.s})`);}
+ 
+function updateSocialMap(){
+  const chars=Object.values(S.chars);
+  if(!chars.length){document.getElementById('svglinks').innerHTML='';document.getElementById('svgnodes').innerHTML='';return;}
+  const w=document.getElementById('mwrap'),W=w.offsetWidth||900,H=w.offsetHeight||180;
+  const cx=W/2,cy=H/2,r=Math.min(W*.42,H*.38);
+  const pos={};chars.forEach((c,i)=>{const a=(i/chars.length)*2*Math.PI-Math.PI/2;pos[c.id]={x:cx+r*Math.cos(a),y:cy+r*Math.sin(a)};});
+  document.getElementById('svgdefs').innerHTML=buildMkrs();
+  const lg=document.getElementById('svglinks');lg.innerHTML='';
+  for(const rel of Object.values(S.rels)){
+    const[aid,bid]=rel.ids,pa=pos[aid],pb=pos[bid];if(!pa||!pb)continue;
+    const sA=rel.score[aid]||0,sB=rel.score[bid]||0;
+    if(sA<8&&sB<8&&rel.level==='Stranger')continue;
+    const dx=pb.x-pa.x,dy=pb.y-pa.y,len=Math.sqrt(dx*dx+dy*dy)||1,ox=-dy/len*7,oy=dx/len*7;
+    if(sA>=8||rel.level!=='Stranger'){const{c,m,ww,d}=rstyle(rel,aid);lg.appendChild(mkLn(pa.x+ox,pa.y+oy,pb.x+ox,pb.y+oy,c,ww,m,d));}
+    if(sB>=8||rel.level!=='Stranger'){const{c,m,ww,d}=rstyle(rel,bid);lg.appendChild(mkLn(pb.x-ox,pb.y-oy,pa.x-ox,pa.y-oy,c,ww,m,d));}
+  }
+  const ng=document.getElementById('svgnodes');ng.innerHTML='';
+  chars.forEach(char=>{
+    const pp=pos[char.id];const g=document.createElementNS('http://www.w3.org/2000/svg','g');g.style.cursor='pointer';
+    let sc=char.cheating?'#c77dff':char.spouse?'#ffd166':char.partner?'#ff6b9d':'rgba(255,255,255,.15)';
+    let sw=char.spouse?3.5:char.partner?2.5:1.5;
+    const ci=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    ci.setAttribute('cx',pp.x);ci.setAttribute('cy',pp.y);ci.setAttribute('r','20');
+    ci.setAttribute('fill','#1f1c30');ci.setAttribute('stroke',sc);ci.setAttribute('stroke-width',sw);g.appendChild(ci);
+    const ft=document.createElementNS('http://www.w3.org/2000/svg','text');
+    ft.setAttribute('x',pp.x);ft.setAttribute('y',pp.y+7);ft.setAttribute('text-anchor','middle');ft.setAttribute('font-size','16');ft.textContent=char.face;g.appendChild(ft);
+    const nt=document.createElementNS('http://www.w3.org/2000/svg','text');
+    nt.setAttribute('x',pp.x);nt.setAttribute('y',pp.y+36);nt.setAttribute('text-anchor','middle');nt.setAttribute('font-size','10');nt.setAttribute('font-weight','700');nt.setAttribute('font-family','Nunito,sans-serif');nt.setAttribute('fill','rgba(255,255,255,.9)');nt.textContent=char.name;g.appendChild(nt);
+    if(char.spouse||char.partner||char.cheating){const ic=document.createElementNS('http://www.w3.org/2000/svg','text');ic.setAttribute('x',pp.x+15);ic.setAttribute('y',pp.y-13);ic.setAttribute('font-size','11');ic.textContent=char.cheating?'🤫':char.spouse?'💍':'💕';g.appendChild(ic);}
+    g.addEventListener('mouseenter',e=>showTT(e,char));g.addEventListener('mouseleave',hideTT);g.addEventListener('click',()=>hlChar(char.id));
+    ng.appendChild(g);
+  });
+  applyMT();
+}
+ 
+function rstyle(rel){
+  if(rel.level==='Enemies') return{c:'#ef476f',m:'url(#me)',ww:2,d:'4,3'};
+  if(rel.level==='Cheating')return{c:'#c77dff',m:'url(#mc)',ww:2,d:'3,2'};
+  if(rel.level==='Married') return{c:'#ffd166',m:'url(#mm)',ww:4,d:''};
+  if(rel.level==='Dating')  return{c:'#ff6b9d',m:'url(#ml)',ww:2.5,d:''};
+  if(rel.level==='Interested')return{c:'#06d6a0',m:'url(#mt)',ww:1.5,d:'2,2'};
+  return{c:'rgba(255,255,255,.15)',m:'url(#mg)',ww:1,d:'2,4'};
+}
+ 
+function buildMkrs(){
+  return[['me','#ef476f'],['mc','#c77dff'],['mm','#ffd166'],['ml','#ff6b9d'],['mt','#06d6a0'],['mg','rgba(255,255,255,.3)']]
+    .map(([id,c])=>`<marker id="${id}" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L8,3 z" fill="${c}"/></marker>`).join('');
+}
+ 
+function mkLn(x1,y1,x2,y2,c,w,m,d){
+  const l=document.createElementNS('http://www.w3.org/2000/svg','line');
+  const dx=x2-x1,dy=y2-y1,len=Math.sqrt(dx*dx+dy*dy)||1,off=22,nx=dx/len,ny=dy/len;
+  l.setAttribute('x1',x1+nx*off);l.setAttribute('y1',y1+ny*off);
+  l.setAttribute('x2',x2-nx*off);l.setAttribute('y2',y2-ny*off);
+  l.setAttribute('stroke',c);l.setAttribute('stroke-width',w);l.setAttribute('marker-end',m);
+  if(d)l.setAttribute('stroke-dasharray',d);return l;
+}
+ 
+function showTT(e,char){
+  const tt=document.getElementById('tooltip');
+  tt.innerHTML=`<strong>${char.face} ${char.name}</strong> · Age ${char.age}<br><span style="color:var(--muted);font-size:10px">${char.status}</span><br><span style="color:var(--accent2);font-size:10px">${char.personalities.join(', ')}</span>`;
+  tt.style.display='block';tt.style.left=(e.clientX+14)+'px';tt.style.top=(e.clientY-36)+'px';
+}
+function hideTT(){document.getElementById('tooltip').style.display='none';}
+ 
+// ── MODAL ──
+function showModal(title,body,actions){
+  document.getElementById('mtitle').textContent=title;
+  document.getElementById('mbody').textContent=body;
+  const ma=document.getElementById('mactions');ma.innerHTML='';
+  actions.forEach(({l,c,cb})=>{
+    const btn=document.createElement('button');btn.className=c;btn.textContent=l;
+    btn.onclick=()=>{closeModal();cb&&cb();};ma.appendChild(btn);
+  });
+  document.getElementById('modal-overlay').classList.add('show');
+}
+function closeModal(){document.getElementById('modal-overlay').classList.remove('show');}
+ 
+// ── CONTROLS ──
+function setSpeed(s){S.speed=s;document.getElementById('spd-badge').textContent=`⏱ ${s}×`;startLoop();}
+function togglePause(){S.paused=!S.paused;document.getElementById('pause-btn').textContent=S.paused?'▶ Resume':'⏸ Pause';}
+function clearAll(){
+  if(!confirm('Remove all characters and reset the island?'))return;
+  Object.keys(S.chars).forEach(id=>document.getElementById('spr-'+id)?.remove());
+  S.chars={};S.rels={};S.nextId=1;S.dramaCount=0;
+  updateRoster();updateSocialMap();updateStats();
+  document.getElementById('dfeed').innerHTML='<div style="padding:12px;text-align:center;color:var(--muted);font-size:11px">Island reset 🌴</div>';
+  document.getElementById('empty-isl').style.display='flex';
+}
+ 
+// ── INIT ──
+document.addEventListener('DOMContentLoaded',()=>{
+  renderGrid();initChips();initMap();startLoop();
+  // Palm decorations
+  const ibg=document.getElementById('ibg');
+  ['🌴','🌴','🌺','🌿','🌴','🌺'].forEach((em,i)=>{
+    const pp=document.createElement('div');pp.className='palm';pp.textContent=em;
+    const angle=i*(Math.PI/3);
+    pp.style.left=(50+38*Math.cos(angle))+'%';pp.style.top=(50+32*Math.sin(angle)*.65)+'%';
+    ibg.appendChild(pp);
+  });
+});
+</script>
+</body>
+</html>
